@@ -84,10 +84,7 @@ public:
 
     // Get the number of items in the ABS
     [[nodiscard]] size_t getSize() const noexcept override {
-        if(curr_size_ == 0) {
-            return 0;
-        }
-        return (curr_size_ - 1);
+        return curr_size_;
     }
 
     // Get the max size of the ABS
