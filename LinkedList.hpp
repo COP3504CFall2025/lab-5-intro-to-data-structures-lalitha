@@ -165,7 +165,7 @@ public:
 		Node* node = rhs.head;
 		while(node) {
 			temp.addTail(node.data);
-			node = node->prev;
+			node = node->next;
 		}
 		
 		head = temp.head;
@@ -183,6 +183,10 @@ public:
 	};
 
 	LinkedList(const LinkedList<T>& list) {
+		head = nullptr;
+		tail = nullptr;
+		count = 0;
+
 		Node* temp = list.head;
 		while(temp) {
 			addTail(temp->data);
