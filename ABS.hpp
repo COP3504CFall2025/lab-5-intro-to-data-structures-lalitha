@@ -12,7 +12,7 @@ class ABS : public StackInterface<T> {
 public:
     // Big 5 + Parameterized Constructor
     ABS() {
-        capacity_ = 1;
+        capacity_ = 0;
         curr_size_ = 0;
         array_ = new T[capacity_];
     }
@@ -20,7 +20,7 @@ public:
     explicit ABS(const size_t capacity) {
         capacity_ = capacity;
         curr_size_ = 0;
-        array_ = new T[capacity_];\
+        array_ = new T[capacity_];
     }
 
     ABS(const ABS& other) : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(new T[other.capacity_]) {
@@ -84,7 +84,7 @@ public:
 
     // Get the number of items in the ABS
     [[nodiscard]] size_t getSize() const noexcept override {
-        return curr_size_;
+        return curr_size_ - 1;
     }
 
     // Get the max size of the ABS
@@ -119,6 +119,10 @@ public:
     }
 
     T peek() const override {
+        if(curr_size_ == 0) {
+            throw std::out_of_range ("Out of Range");
+            return 0;
+        }
         return array_[curr_size_ - 1];
     }
 
