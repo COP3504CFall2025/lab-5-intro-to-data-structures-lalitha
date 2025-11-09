@@ -82,10 +82,16 @@ public:
 		if(head == nullptr) {
 			return false;
 		} else if(count == 1) {
+			Node* old = head;
+			delete old;
+
+
 			head = nullptr;
 			tail = nullptr;
 			count = 0;
+
 			return true;
+
 		}
 
 		count--;
@@ -104,9 +110,13 @@ public:
 		if(tail == nullptr) {
 			return false;
 		} else if(count == 1) {
+			Node* old = head;
+			delete old;
+			
 			head = nullptr;
 			tail = nullptr;
 			count = 0;
+
 			return true;
 		}
 
@@ -120,10 +130,10 @@ public:
 
 		return true;
 	}
+
 	void clear() {
-		while(count != 0) {
+		while(head) {
 			removeHead();
-			count--;
 		}
 	}
 
@@ -132,11 +142,12 @@ public:
 		//ts points to other shit
 		if(this == &other) return *this;
 
+		clear();
+
 		head = other.head;
 		tail = other.tail;
 		count = other.count;
 
-		other.clear();
 		other.head = nullptr;
 		other.tail = nullptr;
 		other.count = 0;
@@ -147,17 +158,19 @@ public:
 		//makes a copy
 		if(this == &rhs) return *this;
 
-		//temp 
-		Node* temp = rhs.head;
-		if(head) {
-			addHead(temp->data);
-		}
-		while(temp){
-			addTail(temp->data);
-			temp = temp->next;
-		}
+		clear();
 
-		count = rhs.count;
+		//temp 
+		LinkedList temp = LinkedList();
+		Node* node = rhs.head;
+		while(node) {
+			temp.addTail(node.data);
+			node = node->prev;
+		}
+		
+		head = temp.head;
+		tail = temp.tail;
+		count = temp.count;
 
 		return *this;
 	}
@@ -170,17 +183,14 @@ public:
 	};
 
 	LinkedList(const LinkedList<T>& list) {
-		head = list.head;		
-		count = list.count;
-		
-		Node* temp = head;
+		Node* temp = list.head;
 		while(temp) {
 			addTail(temp->data);
 			temp = temp->next;
 		}
-
 		count = list.count;
 	}
+
 	LinkedList(LinkedList<T>&& other) noexcept {
 		head = other.head;
 		tail = other.tail;	
