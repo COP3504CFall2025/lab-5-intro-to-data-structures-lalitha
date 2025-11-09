@@ -119,7 +119,7 @@ public:
 		return true;
 	}
 	void clear() {
-		while(count =! 0) {
+		while(count != 0) {
 			removeHead();
 			count--;
 		}
