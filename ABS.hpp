@@ -138,6 +138,7 @@ public:
         //resize
         if(curr_size_ <= capacity_ / 4 && capacity_ > 1) {
             //size_t cap = capacity_ /= 2;
+            capacity_ /= 2;
 
             T* array = new T[2];
             for(size_t i = 0; i < curr_size_; i++) {
