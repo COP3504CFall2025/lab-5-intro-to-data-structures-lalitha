@@ -48,25 +48,17 @@ public:
 	// Insertion
 	void addHead(const T& data) {
 		//allocate data
-		Node* newNode = new Node;
-		newNode->data = data;
+		Node* newNode = new Node{data, nullptr, head};
 
-		//new node points to old head
-		newNode->next = head;
-		newNode->prev = nullptr;
 
 		//head points ot ts
-		head = newNode;
+		head->prev = newNode;
 
 		//update count
 		count++;
 	}
 	void addTail(const T& data) {
-		Node* newNode = new Node;
-		newNode->data = data;
-
-		newNode->prev = tail;
-		newNode->next = nullptr;
+		Node* newNode = new Node{data, tail, nullptr};
 
 		tail = newNode;
 
@@ -76,8 +68,12 @@ public:
 
 	// Removal
 	bool removeHead() {
-		if(head == nullptr || count == 1) {
+		if(head == nullptr) {
 			return false;
+		} else if(count == 1) {
+			head = nullptr;
+			tail = nullptr;
+			count = 0;
 		}
 
 		count--;
@@ -87,15 +83,18 @@ public:
 		head = head->next;
 		head->prev = nullptr;
 		delete old;
-		old = nullptr;
 
 		return true;
 
 	}
 
 	bool removeTail() {
-		if(tail == nullptr || count == 1) {
+		if(tail == nullptr {
 			return false;
+		} else if(count == 1) {
+			head = nullptr;
+			tail = nullptr;
+			count = 0;
 		}
 
 		count--;
@@ -105,7 +104,6 @@ public:
 		tail = tail->prev;
 		tail->next = nullptr;
 		delete old;
-		old = nullptr;
 
 		return true;
 	}
@@ -126,6 +124,9 @@ public:
 		count = other.count;
 
 		other.clear();
+		other.head = nullptr;
+		other.tail = nullptr;
+		other.count = 0;
 
 		return *this;
 	}
