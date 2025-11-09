@@ -139,7 +139,7 @@ public:
 			addHead(temp->data);
 		}
 		while(temp){
-			addTail(rhs.data);
+			addTail(temp->data);
 			temp = temp->next;
 		}
 
@@ -161,7 +161,7 @@ public:
 		
 		Node* temp = head;
 		while(temp) {
-			addTail(list.data);
+			addTail(temp->data);
 			temp = temp->next;
 		}
 
