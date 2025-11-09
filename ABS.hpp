@@ -99,7 +99,7 @@ public:
 
     // Push item onto the stack
     void push(const T& data) override {
-        if(curr_size_ <= capacity_) {
+        if(curr_size_ < capacity_) {
             array_[curr_size_] = data;
             curr_size_++;
         } else { //too big :(
