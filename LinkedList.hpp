@@ -53,6 +53,7 @@ public:
 
 		//new node points to old head
 		newNode->next = head;
+		newNode->prev = nullptr;
 
 		//head points ot ts
 		head = newNode;
@@ -65,6 +66,7 @@ public:
 		newNode->data = data;
 
 		newNode->prev = tail;
+		newNode->next = nullptr;
 
 		tail = newNode;
 
@@ -73,13 +75,16 @@ public:
 
 	// Removal
 	bool RemoveHead() {
-		if(head = nullptr) {
+		if(head = nullptr || count == 1) {
 			return false;
 		}
+
+		count--;
 		
 		//w code
 		Node* old = head;
 		head = head->next;
+		head->prev = nullptr;
 		delete *old;
 		old = nullptr;
 
@@ -88,85 +93,93 @@ public:
 	}
 
 	bool RemoveTail() {
-		if(tail = nullptr) {
+		if(tail = nullptr || count == 1) {
 			return false;
 		}
+
+		count--;
 		
 		//w code
 		Node* old = tail;
 		tail = tail->prev;
-		delete *old;
+		tail->next = nullptr;
+		delete old;
 		old = nullptr;
 
 		return true;
 	}
 	void Clear() {
 		while(count =! 0) {
-			removeHead();
+			this->removeHead();
 			count--;
 		}
 	}
 
 	// Operators
 	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept {
+		//ts points to other shit
 		if(this == &other) return *this;
 
-		Node* temp = other.getHead();
-		while(temp){
-			addTail(other->data);
-			temp = temp.next;
-		}
-
-		count = rhs->count;
+		head = other.head;
+		tail = other.tail;
+		count = other.count;
 
 		other.clear();
 
 		return *this;
 	}
 	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
-
+		//makes a copy
 		if(this == &rhs) return *this;
 
+		//temp 
 		Node* temp = rhs.getHead();
+		if(head) {
+			addHead(temp->data);
+		}
 		while(temp){
-			addTail(rhs->data);
+			this->addTail(rhs.data);
 			temp = temp.next;
 		}
 
-		count = rhs->count;
+		count = rhs.count;
 
 		return *this;
 	}
 
 	// Construction/Destruction
 	LinkedList() {
-		head = new Node*;
-		tail = new Node*;
 		count = 0;
-
-		head->next = tail;
-		head->prev = nullptr;
-		tail->prev = head;
-		tail->next = nullptr;
+		head = nullptr;
+		tail = nullptr;
 	};
 
 	LinkedList(const LinkedList<T>& list) {
-		head = new Node*;
-		tail = new Node*;
-		tail = list->tail;		
-		count = list->count;			
+		head = list.head;		
+		count = list.count;
+		
+		Node* temp = head;
+		while(temp) {
+			this->addTail();
+			temp = temp.next();
+		}
+
+		count = list.count;
 	}
 	LinkedList(LinkedList<T>&& other) noexcept {
-		head = list->head;
-		tail = list->tail;	
-		count = list->count;
+		head = other.head;
+		tail = other.tail;	
+		count = other.count;
 
-		other->head = nullptr;
-		other->tail	 = nullptr;
-		other->count = 0;
+		other.head = nullptr;
+		other.tail = nullptr;
+		other.count = 0;
 	}
 	~LinkedList() {
-		while (getCount() > 0) removeHead();
+		while (getCount() > 0) {
+			this->removeHead();
+			count--;
+		}
 		delete head;
 		delete tail;
 	};
@@ -176,5 +189,4 @@ private:
 	Node* head;
 	Node* tail;
 	unsigned int count;
-
 };
