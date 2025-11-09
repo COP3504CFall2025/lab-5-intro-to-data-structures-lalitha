@@ -131,8 +131,8 @@ public:
             throw std::out_of_range ("Out of Range");
             return 0;
         }
-        return array_[curr_size_ - 1];
         curr_size_--;
+        return array_[curr_size_ - 1];
     }
 
 private:
