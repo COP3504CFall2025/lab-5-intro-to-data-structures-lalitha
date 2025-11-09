@@ -164,7 +164,7 @@ public:
 		LinkedList temp = LinkedList();
 		Node* node = rhs.head;
 		while(node) {
-			temp.addTail(node.data);
+			temp.addTail(node->data);
 			node = node->next;
 		}
 		
@@ -172,7 +172,7 @@ public:
 		tail = temp.tail;
 		count = temp.count;
 
-		return *this;
+		return temp;
 	}
 
 	// Construction/Destruction
