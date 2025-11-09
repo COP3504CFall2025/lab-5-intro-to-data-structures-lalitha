@@ -15,14 +15,14 @@ public:
 	// Behaviors
 	void printForward() const {
 		Node* current = head;
-		for(size_t i = 0; i < getCount; i++) {
+		for(size_t i = 0; i < getCount(); i++) {
 			cout << current->data << endl;
 			current = current->next;
 		}
 	}
 	void printReverse() const {
 		Node* current = tail;
-		for(size_t i = 0; i < getCount; i++) {
+		for(size_t i = 0; i < getCount(); i++) {
 			cout << current->data << endl;
 			current = current->prev;
 		}
@@ -93,7 +93,7 @@ public:
 
 	}
 
-	bool RemoveTail() {
+	bool removeTail() {
 		if(tail = nullptr || count == 1) {
 			return false;
 		}
@@ -109,7 +109,7 @@ public:
 
 		return true;
 	}
-	void Clear() {
+	void clear() {
 		while(count =! 0) {
 			removeHead();
 			count--;
@@ -140,7 +140,7 @@ public:
 		}
 		while(temp){
 			addTail(rhs.data);
-			temp = temp.next;
+			temp = temp->next;
 		}
 
 		count = rhs.count;
