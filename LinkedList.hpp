@@ -50,9 +50,14 @@ public:
 		//allocate data
 		Node* newNode = new Node{data, nullptr, head};
 
-
-		//head points ot ts
-		head->prev = newNode;
+		//check null
+		if(head != nullptr) {
+			head->prev = newNode; //head poiint at ts
+			head = newNode;
+		} else { //empty
+			head = newNode;
+			tail = newNode;
+		}
 
 		//update count
 		count++;
@@ -60,7 +65,13 @@ public:
 	void addTail(const T& data) {
 		Node* newNode = new Node{data, tail, nullptr};
 
-		tail = newNode;
+		if(tail != nullptr) {
+			tail->next = newNode; //head poiint at ts
+			tail = newNode;
+		} else { //empty
+			head = newNode;
+			tail = newNode;
+		}
 
 		count++;
 	}
@@ -178,10 +189,7 @@ public:
 		other.count = 0;
 	}
 	~LinkedList() {
-		while (getCount() > 0) {
-			removeHead();
-			count--;
-		}
+		clear();
 		delete head;
 		delete tail;
 	};
