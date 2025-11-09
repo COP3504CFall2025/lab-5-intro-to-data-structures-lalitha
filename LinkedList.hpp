@@ -85,6 +85,7 @@ public:
 			head = nullptr;
 			tail = nullptr;
 			count = 0;
+			return true;
 		}
 
 		count--;
@@ -106,6 +107,7 @@ public:
 			head = nullptr;
 			tail = nullptr;
 			count = 0;
+			return true;
 		}
 
 		count--;
