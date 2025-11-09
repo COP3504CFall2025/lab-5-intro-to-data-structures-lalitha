@@ -106,7 +106,7 @@ public:
             //relocate
             (capacity_ == 0) ? (capacity_ = 1) : (capacity_ *= 2);
 
-            int* array = new int[capacity_];
+            int* array = new T[capacity_];
             for(size_t i = 0; i < curr_size_; i++) {
                 array[i] = array_[i];
             }
