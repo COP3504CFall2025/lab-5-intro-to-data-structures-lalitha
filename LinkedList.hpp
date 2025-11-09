@@ -46,7 +46,7 @@ public:
 	}
 
 	// Insertion
-	void AddHead(const T& data) {
+	void addHead(const T& data) {
 		//allocate data
 		Node* newNode = new Node*;
 		newNode->data = data;
@@ -61,7 +61,7 @@ public:
 		//update count
 		count++;
 	}
-	void AddTail(const T& data) {
+	void addTail(const T& data) {
 		Node* newNode = new Node*;
 		newNode->data = data;
 
@@ -73,9 +73,9 @@ public:
 		count++;
 	}
 
-	
+
 	// Removal
-	bool RemoveHead() {
+	bool removeHead() {
 		if(head = nullptr || count == 1) {
 			return false;
 		}
@@ -111,7 +111,7 @@ public:
 	}
 	void Clear() {
 		while(count =! 0) {
-			RemoveHead();
+			removeHead();
 			count--;
 		}
 	}
@@ -136,10 +136,10 @@ public:
 		//temp 
 		Node* temp = rhs.getHead();
 		if(head) {
-			AddHead(temp->data);
+			addHead(temp->data);
 		}
 		while(temp){
-			AddTail(rhs.data);
+			addTail(rhs.data);
 			temp = temp.next;
 		}
 
@@ -161,7 +161,7 @@ public:
 		
 		Node* temp = head;
 		while(temp) {
-			AddTail();
+			addTail();
 			temp = temp.next();
 		}
 
@@ -178,7 +178,7 @@ public:
 	}
 	~LinkedList() {
 		while (getCount() > 0) {
-			RemoveHead();
+			removeHead();
 			count--;
 		}
 		delete head;
