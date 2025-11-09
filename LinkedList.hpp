@@ -86,7 +86,7 @@ public:
 		Node* old = head;
 		head = head->next;
 		head->prev = nullptr;
-		delete *old;
+		delete old;
 		old = nullptr;
 
 		return true;
@@ -134,7 +134,7 @@ public:
 		if(this == &rhs) return *this;
 
 		//temp 
-		Node* temp = rhs.getHead();
+		Node* temp = rhs.head;
 		if(head) {
 			addHead(temp->data);
 		}
@@ -162,7 +162,7 @@ public:
 		Node* temp = head;
 		while(temp) {
 			addTail();
-			temp = temp.next();
+			temp = temp->next();
 		}
 
 		count = list.count;
