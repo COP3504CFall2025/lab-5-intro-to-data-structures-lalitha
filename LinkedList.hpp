@@ -73,6 +73,7 @@ public:
 		count++;
 	}
 
+	
 	// Removal
 	bool RemoveHead() {
 		if(head = nullptr || count == 1) {
