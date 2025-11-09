@@ -192,8 +192,6 @@ public:
 	}
 	~LinkedList() {
 		clear();
-		delete head;
-		delete tail;
 	};
 
 private:
