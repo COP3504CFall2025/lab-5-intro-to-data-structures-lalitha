@@ -120,7 +120,7 @@ public:
 
     T peek() const override {
         if(curr_size_ == 0) {
-            throw std::out_of_range ("Out of Range");
+            throw std::runtime_error ("eror");
             return 0;
         }
         return array_[curr_size_ - 1];
@@ -128,11 +128,13 @@ public:
 
     T pop() override {
         if(curr_size_ == 0) {
-            throw std::out_of_range ("Out of Range");
+            throw std::runtime_error ("e or");
             return 0;
         }
+
+        T el = array_[curr_size_ - 1];
         curr_size_--;
-        return array_[curr_size_ - 1];
+        return el;
     }
 
 private:
