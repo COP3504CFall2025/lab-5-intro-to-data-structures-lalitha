@@ -38,7 +38,7 @@ public:
          delete[] array_;
 
         //copy variables
-        array_ = new int[rhs.capacity_];
+        array_ = new T[rhs.capacity_];
         curr_size_ = rhs.curr_size_;
         capacity_ = rhs.capacity_;
 
@@ -106,7 +106,7 @@ public:
             //relocate
             (capacity_ == 0) ? (capacity_ = 1) : (capacity_ *= 2);
 
-            int* array = new T[capacity_];
+            T* array = new T[capacity_];
             for(size_t i = 0; i < curr_size_; i++) {
                 array[i] = array_[i];
             }
