@@ -110,7 +110,7 @@ public:
 	}
 	void Clear() {
 		while(count =! 0) {
-			this->removeHead();
+			RemoveHead();
 			count--;
 		}
 	}
@@ -135,10 +135,10 @@ public:
 		//temp 
 		Node* temp = rhs.getHead();
 		if(head) {
-			addHead(temp->data);
+			AddHead(temp->data);
 		}
 		while(temp){
-			this->addTail(rhs.data);
+			AddTail(rhs.data);
 			temp = temp.next;
 		}
 
@@ -160,7 +160,7 @@ public:
 		
 		Node* temp = head;
 		while(temp) {
-			this->addTail();
+			AddTail();
 			temp = temp.next();
 		}
 
@@ -177,7 +177,7 @@ public:
 	}
 	~LinkedList() {
 		while (getCount() > 0) {
-			this->removeHead();
+			RemoveHead();
 			count--;
 		}
 		delete head;
