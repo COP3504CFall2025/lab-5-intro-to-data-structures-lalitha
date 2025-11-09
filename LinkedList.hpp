@@ -89,7 +89,7 @@ public:
 	}
 
 	bool removeTail() {
-		if(tail == nullptr {
+		if(tail == nullptr) {
 			return false;
 		} else if(count == 1) {
 			head = nullptr;
