@@ -120,7 +120,7 @@ public:
     // Access
     T peek() const override {
         if(curr_size_ == 0) {
-            throw std::runtime_error ("eror");
+            throw std::runtime_error("eror");
             return 0;
         }
         return array_[curr_size_ - 1];
@@ -129,7 +129,7 @@ public:
     // Deletion
     T dequeue() override {
         if(curr_size_ == 0) {
-            throw std::runtime_error ("e or");
+            throw std::runtime_error("e or");
         }
 
         T el = array_[0];
