@@ -82,8 +82,6 @@ public:
     }
 
     ~ABQ() noexcept override {
-        delete capacity_;
-        delete curr_size_;
         delete[] array_;
     }
 
