@@ -26,11 +26,10 @@ public:
         if(list.getHead() == nullptr) {
             throw std::runtime_error ("e or");
         }
-    ]
         
         T d = (list.getHead())->data;
         list.removeHead();
-        return d;
+        return 0;
     }
 
     // Access
