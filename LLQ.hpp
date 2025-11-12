@@ -22,12 +22,22 @@ public:
 
     // Deletion
     T dequeue() override { // remove head
+        if(list.getHead() == nullptr) {
+            throw std::runtime_error ("e or");
+        }
         
+        T d = (list.getHead())->data;
+        list.removeHead();
+        return d;
     }
 
     // Access
     T peek() const override { //return head
+        if(list.getHead()  == nullptr) {
+            throw std::runtime_error ("e or");
+        }
 
+        return (list.getHead())->data;
     }
 
     // Getter
