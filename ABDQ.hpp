@@ -8,7 +8,7 @@
 template <typename T>
 class ABDQ : public DequeInterface<T> {
 private:
-    T* data_;                 // underlying dynamic array
+    T* data_;                 // underlying dynamic array    circular array buffer
     std::size_t capacity_;    // total allocated capacity
     std::size_t size_;        // number of stored elements
     std::size_t front_;       // index of front element
@@ -18,13 +18,86 @@ private:
 
 public:
     // Big 5
-    ABDQ();
-    explicit ABDQ(std::size_t capacity);
-    ABDQ(const ABDQ& other);
-    ABDQ(ABDQ&& other) noexcept;
-    ABDQ& operator=(const ABDQ& other);
-    ABDQ& operator=(ABDQ&& other) noexcept;
-    ~ABDQ() override;
+    ABDQ() {
+       // Default Constructor. Default capacity_ to 4, size_ to 0, front_ and back_ to 0, and create buffer array data_.
+       capacity_ = 4;
+       size_ = 0;
+       front_ = 0;
+       back_ = 0;
+
+       data_ = new T[capacity_];
+    }
+
+    explicit ABDQ(std::size_t capacity) : capacity_(capacity) {
+        size_ = 0;
+        front_ = 0;
+        back_ = 0;
+
+        data_ = new T[capacity_];
+    }
+
+    ABDQ(const ABDQ& other) : size_(other.size_), front_(other.front_), back_(other.back_), data_(new T(capacity_)) {
+        for(size_t i = 0; i < other.size_; i++) {
+            data_[i] = other.data_[i];
+        }
+    }
+
+    ABDQ(ABDQ&& other) noexcept : size_(other.size_), front_(other.front_), back_(other.back_), data_(other.data_) {
+        other.size_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
+        other.data_ = nullptr;
+    }
+
+    ABDQ& operator=(const ABDQ& other) {
+        //check if same
+        if(this == &other) {return *this;}
+
+        //clear old
+        delete[] data_;
+
+        //copy over
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = other.front_;
+        back_ = other.back_;
+
+        data_ = new T[capacity_];
+        for(size_t i = 0; i < other.size_; i++) {
+            data_[i] = other.data_[i];
+        }
+
+        return *this;
+    }
+    ABDQ& operator=(ABDQ&& other) noexcept {
+        //check if same
+        if(this == &other) {return *this;}
+
+        //clear old
+        delete[] data_;
+
+        //new data
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = other.front_;
+        back_ = other.back_;
+        data_ = other.data_;
+
+        //delet4e old
+        other.size_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
+        other.data_ = nullptr;
+
+        return *this;
+    }
+    ~ABDQ() override {
+        size_ = 0;
+        front_ = 0;
+        back_ = 0;
+
+        delete[] data_;
+    }
 
     // Insertion
     void pushFront(const T& item) override;

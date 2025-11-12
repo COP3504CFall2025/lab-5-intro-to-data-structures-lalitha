@@ -47,7 +47,7 @@ public:
             array_[i] = rhs.array_[i];
         }
 
-    return *this;
+        return *this;
     }
 
     ABS(ABS&& other) noexcept : curr_size_(other.curr_size_), capacity_(other.capacity_), array_(other.array_){
