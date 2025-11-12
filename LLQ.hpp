@@ -17,7 +17,7 @@ public:
 
     // Insertion
     void enqueue(const T& item) override { // add new tail
-        
+        list.addTail(item);
     }
 
     // Deletion

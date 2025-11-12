@@ -29,7 +29,7 @@ public:
         
         T d = (list.getHead())->data;
         list.removeHead();
-        return 0;
+        return d;
     }
 
     // Access
