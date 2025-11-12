@@ -99,19 +99,86 @@ public:
         delete[] data_;
     }
 
-    // Insertion
-    void pushFront(const T& item) override;
-    void pushBack(const T& item) override;
+    // Insertion - Access extremities
+    void pushFront(const T& item) override {
+
+    }
+
+    void pushBack(const T& item) override {
+
+    }
+
+    void ensureCapacity() {
+        capacity_ *= 2;
+        T* data = new T[capacity_];
+         for(size_t i = 0; i < size_; i++) {
+             data[i] = data_[i];
+        }
+        delete[] data_;
+        data_ = data;
+    }
+
+    void shrinkIfNeeded() {
+        capacity_ /= 2;
+        T* data = new T[capacity_];
+         for(size_t i = 0; i < size_; i++) {
+             data[i] = data_[i];
+        }
+        delete[] data_;
+        data_ = data;
+    }
 
     // Deletion
-    T popFront() override;
-    T popBack() override;
+    T popFront() override {
+        if(size_ == 0) {
+            throw std::runtime_error ("e or");
+            return 0;
+        }
+
+
+        T el = data_[0];
+        for(int i = 1; i < size_; i++) {
+            data_[i - 1] = data_[i];
+        }
+        size_--;
+
+        //resize
+        if(size_ <= capacity_ / 4 && capacity_ > 1) {
+            shrinkifneeded();
+        }
+
+        return el;
+    }
+
+    T popBack() override {
+        if(size_ == 0) {
+            throw std::runtime_error ("e or");
+            return 0;
+        }
+
+        T el = data_[0];
+        size_--;
+
+        //resize
+        if(size_ <= capacity_ / 4 && capacity_ > 1) {
+            shrinkifneeded();
+        }
+
+        return el;
+    }
 
     // Access
-    const T& front() const override;
-    const T& back() const override;
+    const T& front() const override {
+        return data_[front_];
+    }
+
+    const T& back() const override {
+        return data_[back_];
+    }
 
     // Getters
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override {
+        return size_;
+    }
 
 };
