@@ -22,7 +22,7 @@ public:
 
     // Deletion
     T pop() override { //remove and return head
-        T d = (list.getHead)->data;
+        T d = (list.getHead())->data;
         list.removeHead();
         return d;
     }
