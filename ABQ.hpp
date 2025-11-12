@@ -139,6 +139,17 @@ public:
         }
         curr_size_--;
 
+        if(curr_size_ <= capacity_ / 4 && capacity_ > 1) {
+            capacity_ /= 2;
+
+            T* array = new T[capacity_];
+            for(size_t i = 0; i < curr_size_; i++) {
+                array[i] = array_[i];
+            }
+            delete[] array_;
+            array_ = array;
+        }
+
         return el;
     }
 
