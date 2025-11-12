@@ -28,8 +28,9 @@ public:
         }
         
         T d = (list.getHead())->data;
-        list.removeHead();
-        return d;
+        if(list.removeHead()) {
+            return d;
+        };
     }
 
     // Access
