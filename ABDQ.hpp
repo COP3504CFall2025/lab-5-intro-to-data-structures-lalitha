@@ -101,7 +101,7 @@ public:
 
     // Insertion - Access extremities
     void pushFront(const T& item) override {
-
+        
     }
 
     void pushBack(const T& item) override {
@@ -144,7 +144,7 @@ public:
 
         //resize
         if(size_ <= capacity_ / 4 && capacity_ > 1) {
-            shrinkifneeded();
+            shrinkIfNeeded();
         }
 
         return el;
@@ -161,7 +161,7 @@ public:
 
         //resize
         if(size_ <= capacity_ / 4 && capacity_ > 1) {
-            shrinkifneeded();
+            shrinkIfNeeded();
         }
 
         return el;
