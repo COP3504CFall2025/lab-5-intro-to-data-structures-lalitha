@@ -65,7 +65,7 @@ public:
 
         data_ = new T[capacity_];
         for(size_t i = 0; i < other.size_; i++) {
-            data_[i] = data_[(front_ + i) % capacity_];
+            data_[i] = other.data_[i];
         }
 
         return *this;
@@ -127,13 +127,10 @@ public:
         (capacity_ == 0) ? (capacity_ = 1) : (capacity_ *= 2);
         T* data = new T[capacity_];
          for(size_t i = 0; i < size_; i++) {
-             data[i] = data_[(front_ + i) % cap];
+             data[i] = data_[i];
         }
         delete[] data_;
         data_ = data;
-
-        front_ = 0;
-        back_ = size_;
     }
 
     void shrinkIfNeeded() {
