@@ -36,9 +36,9 @@ public:
         data_ = new T[capacity_];
     }
 
-    ABDQ(const ABDQ& other) : capacity_(other.capacity_), size_(other.size_), front_(other.front_), back_(other.back_), data_(new T[capacity_]) {
+    ABDQ(const ABDQ& other) : capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.size_), data_(new T[capacity_]) {
         for(size_t i = 0; i < other.size_; i++) {
-            data_[i] = data_[(front_ + i) % capacity_];
+            data_[i] = other.data_[(front_ + i) % capacity_];
         }
     }
 
@@ -131,6 +131,9 @@ public:
         }
         delete[] data_;
         data_ = data;
+
+        front_ = 0;
+        back_ = size_;
     }
 
     void shrinkIfNeeded() {
@@ -142,6 +145,9 @@ public:
         }
         delete[] data_;
         data_ = data;
+
+        front_ = 0;
+        back_ = size_;
     }
 
     // Deletion
