@@ -141,7 +141,7 @@ public:
         capacity_ /= 2;
         T* data = new T[capacity_];
          for(size_t i = 0; i < cap; i++) {
-             data[i] = data_[(front_+i) % cap]];
+             data[i] = data_[(front_+i) % cap];
         }
         delete[] data_;
         data_ = data;
