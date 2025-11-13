@@ -129,7 +129,6 @@ public:
     T pop() override {
         if(curr_size_ == 0) {
             throw std::runtime_error ("e or");
-            return 0;
         }
 
         T el = array_[curr_size_ - 1];
