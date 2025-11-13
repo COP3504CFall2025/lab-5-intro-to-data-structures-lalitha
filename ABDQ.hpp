@@ -36,13 +36,14 @@ public:
         data_ = new T[capacity_];
     }
 
-    ABDQ(const ABDQ& other) : size_(other.size_), front_(other.front_), back_(other.back_), data_(new T(capacity_)) {
+    ABDQ(const ABDQ& other) : capacity_(other.capacity_), size_(other.size_), front_(other.front_), back_(other.back_), data_(new T[capacity_]) {
         for(size_t i = 0; i < other.size_; i++) {
-            data_[i] = other.data_[i];
+            data_[i] = data_[(front_ + 1) % capacity_];
         }
     }
 
-    ABDQ(ABDQ&& other) noexcept : size_(other.size_), front_(other.front_), back_(other.back_), data_(other.data_) {
+    ABDQ(ABDQ&& other) noexcept : capacity_(other.capacity_), size_(other.size_), front_(other.front_), back_(other.back_), data_(other.data_) {
+        other.capacity_ = 0;
         other.size_ = 0;
         other.front_ = 0;
         other.back_ = 0;
@@ -64,7 +65,7 @@ public:
 
         data_ = new T[capacity_];
         for(size_t i = 0; i < other.size_; i++) {
-            data_[i] = other.data_[i];
+            data_[i] = data_[(front_ + 1) % capacity_];
         }
 
         return *this;
@@ -102,45 +103,42 @@ public:
     // Insertion
     void pushFront(const T& item) override {
         if(size_ >= capacity_) {
-            ensureCapacity();
+             ensureCapacity();
         }
-
         size_++;
-        for(int i = front_; i < size_ - 1; i++) {
-                data_[i + 1] = data_[i];
-            }
+
+        front_ = (front_ - 1 + capacity_) % capacity_;
         data_[front_] = item;
-        back+=1;
     }
 
     void pushBack(const T& item) override {
         if(size_ >= capacity_) {
-            ensureCapacity();
+             ensureCapacity();
         }
-
         size_++;
-        for(int i = back_; i < size_ - 1; i++) {
-                data_[i + 1] = data_[i];
-            }
+
+        back_ = (back_ + 1) % capacity_;
         data_[back_] = item;
-        back_+=1;
     }
+        
 
     void ensureCapacity() {
+        std::size_t cap = capacity_;
         (capacity_ == 0) ? (capacity_ = 1) : (capacity_ *= 2);
         T* data = new T[capacity_];
          for(size_t i = 0; i < size_; i++) {
-             data[i] = data_[i];
+             data[i] = data_[(front_ + 1) % cap];
         }
         delete[] data_;
         data_ = data;
     }
 
     void shrinkIfNeeded() {
+        std::size_t cap = capacity_;
         capacity_ /= 2;
         T* data = new T[capacity_];
          for(size_t i = 0; i < size_; i++) {
-             data[i] = data_[i];
+             data[i] = data_[(front_ + 1) % cap];
         }
         delete[] data_;
         data_ = data;
@@ -148,15 +146,13 @@ public:
 
     // Deletion
     T popFront() override {
-        if((front_ - back_) == 0) {
+        if(size_ == 0) {
             throw std::runtime_error("e or");
         }
 
 
         T el = data_[front_];
-        for(int i = front_ + 1; i < size_; i++) {
-            data_[i - 1] = data_[i];
-        }
+        front_ = (front_ + 1) % capacity_;
         size_--;
 
         //resize
@@ -168,14 +164,12 @@ public:
     }
 
     T popBack() override {
-        if((front_ - back_) == 0) {
+        if(size_ == 0) {
             throw std::runtime_error("e or");
         }
 
         T el = data_[back_];
-        for(int i = back + 1; i < size_; i++) {
-            data_[i - 1] = data_[i];
-        }
+        back_ = (back_ - 1 + capacity_) % capacity_;
         size_--;
 
         //resize
