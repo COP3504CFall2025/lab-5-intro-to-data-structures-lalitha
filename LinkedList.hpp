@@ -168,6 +168,7 @@ public:
 			node = node->next;
 		}
 		
+
 		head = temp.head;
 		tail = temp.tail;
 		count = temp.count;

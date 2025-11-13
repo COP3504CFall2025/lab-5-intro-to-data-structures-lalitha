@@ -36,7 +36,7 @@ public:
         data_ = new T[capacity_];
     }
 
-    ABDQ(const ABDQ& other) : capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.size_), data_(new T[capacity_]) {
+    ABDQ(const ABDQ& other) : capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.size_), data_(new T[other.capacity_]) {
         for(size_t i = 0; i < other.size_; i++) {
             data_[i] = other.data_[(front_ + i) % capacity_];
         }
