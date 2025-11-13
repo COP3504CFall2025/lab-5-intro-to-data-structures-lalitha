@@ -109,7 +109,8 @@ public:
         for(int i = front_; i < size_ - 1; i++) {
                 data_[i + 1] = data_[i];
             }
-        T el = data_[front_];
+        data_[front_] = item;
+        back+=1;
     }
 
     void pushBack(const T& item) override {
@@ -121,7 +122,8 @@ public:
         for(int i = back_; i < size_ - 1; i++) {
                 data_[i + 1] = data_[i];
             }
-        T el = data_[back_];
+        data_[back_] = item;
+        back_+=1;
     }
 
     void ensureCapacity() {
