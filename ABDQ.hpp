@@ -127,10 +127,13 @@ public:
         (capacity_ == 0) ? (capacity_ = 1) : (capacity_ *= 2);
         T* data = new T[capacity_];
          for(size_t i = 0; i < cap; i++) {
-             data[i] = data_[i];
+             data[i] = data_[(front_+i) % cap];
         }
         delete[] data_;
         data_ = data;
+
+        front_ = 0;
+        back_= size_;
     }
 
     void shrinkIfNeeded() {
@@ -138,10 +141,13 @@ public:
         capacity_ /= 2;
         T* data = new T[capacity_];
          for(size_t i = 0; i < cap; i++) {
-             data[i] = data_[i];
+             data[i] = data_[(front_+i) % cap]];
         }
         delete[] data_;
         data_ = data;
+
+        front_ = 0;
+        back_= size_;
     }
 
     // Deletion
