@@ -99,17 +99,33 @@ public:
         delete[] data_;
     }
 
-    // Insertion - Access extremities
+    // Insertion
     void pushFront(const T& item) override {
-        
+        if(size_ >= capacity_) {
+            ensureCapacity();
+        }
+
+        size_++;
+        for(int i = front_; i < size_ - 1; i++) {
+                data_[i + 1] = data_[i];
+            }
+        T el = data_[front_];
     }
 
     void pushBack(const T& item) override {
+        if(size_ >= capacity_) {
+            ensureCapacity();
+        }
 
+        size_++;
+        for(int i = back_; i < size_ - 1; i++) {
+                data_[i + 1] = data_[i];
+            }
+        T el = data_[back_];
     }
 
     void ensureCapacity() {
-        capacity_ *= 2;
+        (capacity_ == 0) ? (capacity_ = 1) : (capacity_ *= 2);
         T* data = new T[capacity_];
          for(size_t i = 0; i < size_; i++) {
              data[i] = data_[i];
@@ -130,14 +146,13 @@ public:
 
     // Deletion
     T popFront() override {
-        if(size_ == 0) {
-            throw std::runtime_error ("e or");
-            return 0;
+        if((front_ - back_) == 0) {
+            throw std::runtime_error("e or");
         }
 
 
-        T el = data_[0];
-        for(int i = 1; i < size_; i++) {
+        T el = data_[front_];
+        for(int i = front_ + 1; i < size_; i++) {
             data_[i - 1] = data_[i];
         }
         size_--;
@@ -151,12 +166,14 @@ public:
     }
 
     T popBack() override {
-        if(size_ == 0) {
-            throw std::runtime_error ("e or");
-            return 0;
+        if((front_ - back_) == 0) {
+            throw std::runtime_error("e or");
         }
 
-        T el = data_[0];
+        T el = data_[back_];
+        for(int i = back + 1; i < size_; i++) {
+            data_[i - 1] = data_[i];
+        }
         size_--;
 
         //resize
