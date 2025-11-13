@@ -38,7 +38,7 @@ public:
 
     ABDQ(const ABDQ& other) : capacity_(other.capacity_), size_(other.size_), front_(other.front_), back_(other.back_), data_(new T[capacity_]) {
         for(size_t i = 0; i < other.size_; i++) {
-            data_[i] = data_[(front_ + 1) % capacity_];
+            data_[i] = data_[(front_ + i) % capacity_];
         }
     }
 
@@ -65,7 +65,7 @@ public:
 
         data_ = new T[capacity_];
         for(size_t i = 0; i < other.size_; i++) {
-            data_[i] = data_[(front_ + 1) % capacity_];
+            data_[i] = data_[(front_ + i) % capacity_];
         }
 
         return *this;
@@ -105,20 +105,20 @@ public:
         if(size_ >= capacity_) {
              ensureCapacity();
         }
-        size_++;
 
         front_ = (front_ - 1 + capacity_) % capacity_;
         data_[front_] = item;
+        size_++;
     }
 
     void pushBack(const T& item) override {
         if(size_ >= capacity_) {
              ensureCapacity();
         }
-        size_++;
 
-        back_ = (back_ + 1) % capacity_;
         data_[back_] = item;
+        back_ = (back_ + 1) % capacity_;
+        size_++;
     }
         
 
@@ -127,7 +127,7 @@ public:
         (capacity_ == 0) ? (capacity_ = 1) : (capacity_ *= 2);
         T* data = new T[capacity_];
          for(size_t i = 0; i < size_; i++) {
-             data[i] = data_[(front_ + 1) % cap];
+             data[i] = data_[(front_ + i) % cap];
         }
         delete[] data_;
         data_ = data;
@@ -138,7 +138,7 @@ public:
         capacity_ /= 2;
         T* data = new T[capacity_];
          for(size_t i = 0; i < size_; i++) {
-             data[i] = data_[(front_ + 1) % cap];
+             data[i] = data_[(front_ + i) % cap];
         }
         delete[] data_;
         data_ = data;
@@ -168,8 +168,8 @@ public:
             throw std::runtime_error("e or");
         }
 
-        T el = data_[back_];
         back_ = (back_ - 1 + capacity_) % capacity_;
+        T el = data_[back_];
         size_--;
 
         //resize
@@ -182,11 +182,17 @@ public:
 
     // Access
     const T& front() const override {
+        if(size_ == 0) {
+            throw std::runtime_error("e or");
+        }
         return data_[front_];
     }
 
     const T& back() const override {
-        return data_[back_];
+        if(size_ == 0) {
+            throw std::runtime_error("e or");
+        }
+        return data_[(back_ - 1 + capacity_) % capacity_];
     }
 
     // Getters
